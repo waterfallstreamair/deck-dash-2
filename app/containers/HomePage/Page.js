@@ -85,7 +85,7 @@ export class HomePage extends React.Component {
           </Column>
           {posts && posts.length && posts.map(e =>
             comments.get(e.id) && 
-              <Column key={`comments-${e.id}`}>
+              <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
                 <Head>
                   <H3>{`Post ${e.id} Comments`}</H3>
                   <Remove onClick={event => this.removeComments({ post: e }) }>X</Remove>

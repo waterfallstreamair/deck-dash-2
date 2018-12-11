@@ -21,8 +21,7 @@ import Search from '../../components/Search';
 import Head from '../../components/Head';
 import List from '../../components/List';
 
-/* eslint-disable react/prefer-stateless-function */
-export class HomePage extends React.PureComponent {
+export class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -37,9 +36,7 @@ export class HomePage extends React.PureComponent {
   
   getComments = (options) => {
     const { post } = options;
-    if (!post.comments) {
-      this.props.getCommentsRequest({ post });
-    }
+    this.props.getCommentsRequest({ post });
   };
   
   removeComments = (options) => {
@@ -54,8 +51,7 @@ export class HomePage extends React.PureComponent {
   };
   
   render() {
-    console.log({ props: this.props })
-    const { posts } = this.props;
+    const { posts, comments } = this.props;
     const search = this.state.search ? this.state.search.toLowerCase() : null;
     const filtered = search ? 
       posts.filter(e => e.title.toLowerCase().includes(search)) 
@@ -71,79 +67,53 @@ export class HomePage extends React.PureComponent {
           />
         </Helmet>
         <div>
-        
-     <Content>
-        <Column key={'posts'} >
-          <Head>
-            <H3>Posts</H3>
-            <Search placeholder="Search..." onKeyUp={e => this.handleSearch(e) } />
-          </Head>
-          <List>
-            {posts.length ? (filtered || posts).map(e =>
-              <Item key={`post-${e.id}`} onClick={event => this.getComments({ post: e }) } >
-                <Title>{`${e.title}`}</Title>
-                <Text>{`${e.body}`}</Text>
-              </Item>
-            ) : ''}
-          </List>
-        </Column>
-        {posts.map(e =>
-          e.comments && 
-            <Column key={`comments-${e.id}`}>
-              <Head>
-                <H3>{`Post ${e.id} Comments`}</H3>
-                <Remove onClick={event => this.removeComments({ post: e }) }>X</Remove>
-              </Head>
-              <List>
-              {e.comments.length ? e.comments.map(c =>
-                <Item key={`comment-${c.id}`}>
-                  <Title>{`${c.name}`}</Title>
-                  <Text>{`${c.body}`}</Text>
+          
+       <Content>
+          <Column key={'posts'} >
+            <Head>
+              <H3>Posts</H3>
+              <Search placeholder="Search..." onKeyUp={e => this.handleSearch(e) } />
+            </Head>
+            <List>
+              {posts && posts.length ? (filtered || posts).map(e =>
+                <Item key={`post-${e.id}`} onClick={event => this.getComments({ post: e }) } >
+                  <Title>{`${e.title}`}</Title>
+                  <Text>{`${e.body}`}</Text>
                 </Item>
               ) : ''}
-              </List>
-            </Column>
-        )}
-      </Content>
-     
+            </List>
+          </Column>
+          {posts && posts.length && posts.map(e =>
+            comments.get(e.id) && 
+              <Column key={`comments-${e.id}`}>
+                <Head>
+                  <H3>{`Post ${e.id} Comments`}</H3>
+                  <Remove onClick={event => this.removeComments({ post: e }) }>X</Remove>
+                </Head>
+                <List>
+                {comments.get(e.id).length ? comments.get(e.id).map(c =>
+                  <Item key={`comment-${c.id}`}>
+                    <Title>{`${c.name}`}</Title>
+                    <Text>{`${c.body}`}</Text>
+                  </Item>
+                ) : ''}
+                </List>
+              </Column>
+          )}
+        </Content>
+       
         </div>
       </article>
     );
   }
 }
-
+/*
 HomePage.propTypes = {
   posts: PropTypes.array.isRequired,
+  comments: PropTypes.object.isRequired,
   getPostsRequest: PropTypes.func.isRequired,
   getCommentsRequest: PropTypes.func.isRequired,
   removeComments: PropTypes.func.isRequired
 };
-
-export default HomePage
-
-/*
-
-class BoardPage extends Component {
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-
-  render = () => {
-    
-    return (
-      
-    );
-  };
-}
-
-export default BoardPage;
-
-
 */
+export default HomePage

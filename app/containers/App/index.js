@@ -35,7 +35,7 @@ export default function App() {
         <meta name="description" content="A Deck dash 2 application" />
       </Helmet>
       <Main>
-      <H1>Maehren Digital deck dashboard</H1>
+      <H1>Mähren Digital GmbH Deck Dashboard 2</H1>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="" component={NotFoundPage} />

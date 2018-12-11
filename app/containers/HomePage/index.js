@@ -5,90 +5,28 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
-import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
-import Input from './Input';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+import { selectHome } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import HomePage from './Page';
 
-/* eslint-disable react/prefer-stateless-function */
-export class HomePage extends React.PureComponent {
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
-  componentDidMount() {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm();
-    }
-  }
+import * as postActions from './actions';
 
-  render() {
-    const { loading, error, repos } = this.props;
-    const reposListProps = {
-      loading,
-      error,
-      repos,
-    };
+const mapStateToProps = state => ({
+  posts: selectHome(state)
+});
 
-    return (
-      <article>
-        <Helmet>
-          <title>Home</title>
-          <meta
-            name="description"
-            content="A React.js Boilerplate application homepage"
-          />
-        </Helmet>
-        <div>
-     hello
-        </div>
-      </article>
-    );
-  }
-}
-
-HomePage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func,
-};
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-    onSubmitForm: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-    },
-  };
-}
-
-const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
+const mapDispatchToProps = dispatch => ({
+  getPostsRequest: () => dispatch(postActions.getPostsRequest()),
+  getCommentsRequest: options => dispatch(postActions.getCommentsRequest(options)),
+  removeComments: options => dispatch(postActions.removeComments(options))
 });
 
 const withConnect = connect(
@@ -104,3 +42,21 @@ export default compose(
   withSaga,
   withConnect,
 )(HomePage);
+
+/*
+export function mapDispatchToProps(dispatch) {
+  return {
+    onChangeUsername: e => dispatch(changeUsername(e.target.value)),
+    onSubmitForm: e => {
+      e.preventDefault();
+      dispatch(loadRepos());
+    },
+  };
+}
+
+const mapStateToProps = createStructuredSelector({
+  posts: makeSelectRepos(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
+});
+*/

@@ -1,38 +1,34 @@
-/**
- * Gets the repositories of the user from Github
- */
-
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOAD_REPOS } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
-
+import { call, put, takeLatest } from 'redux-saga/effects';
+import * as constants from './constants';
+import * as postsActions from './actions';
 import request from 'utils/request';
-import { makeSelectUsername } from 'containers/HomePage/selectors';
 
-/**
- * Github repos request/response handler
- */
-export function* getRepos() {
-  // Select username from store
-  const username = yield select(makeSelectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-
+export function* getPosts() {
+  const url = constants.CONST_URL_POSTS;
   try {
-    // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
-    yield put(reposLoaded(repos, username));
-  } catch (err) {
-    yield put(repoLoadingError(err));
+    const posts = yield call(request, url);
+    yield put(postsActions.getPosts({ posts }));
+  } catch (e) {
+    console.log({ e });
+  }
+}
+
+export function* getComments(action) {
+  const { post } = action;
+  const url = constants.CONST_URL_COMMENTS.replace('postId', post.id);
+  try {
+    const comments = yield call(request, url);
+    yield put(postsActions.getComments({post, comments}));
+  } catch (e) {
+    //yield put(repoLoadingError(err));
+    console.log({ e });
   }
 }
 
 /**
  * Root saga manages watcher lifecycle
  */
-export default function* githubData() {
-  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  // It will be cancelled automatically on component unmount
-  yield takeLatest(LOAD_REPOS, getRepos);
+export default function* postsData() {
+  return yield takeLatest(constants.TYPE_POSTS_REQUEST, getPosts);
+  //yield takeLatest(constants.TYPE_COMMENTS_REQUEST, getComments);
 }

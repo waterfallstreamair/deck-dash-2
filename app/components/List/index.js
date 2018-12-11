@@ -1,33 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import Ul from './Ul';
-import Wrapper from './Wrapper';
-
-function List(props) {
-  const ComponentToRender = props.component;
-  let content = <div />;
-
-  // If we have items, render them
-  if (props.items) {
-    content = props.items.map(item => (
-      <ComponentToRender key={`item-${item.id}`} item={item} />
-    ));
-  } else {
-    // Otherwise render a single component
-    content = <ComponentToRender />;
-  }
-
-  return (
-    <Wrapper>
-      <Ul>{content}</Ul>
-    </Wrapper>
-  );
-}
-
-List.propTypes = {
-  component: PropTypes.func.isRequired,
-  items: PropTypes.array,
-};
+const List = styled.div`
+  width: 100%;
+  vertical-align: top;
+  overflow-y: scroll;
+  height: 80%;
+`;
 
 export default List;

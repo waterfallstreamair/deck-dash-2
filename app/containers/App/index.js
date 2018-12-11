@@ -10,14 +10,11 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
-
 import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-
 import GlobalStyle from '../../global-styles';
+import H1 from '../../components/H1';
+import Main from '../../components/Main';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -37,10 +34,13 @@ export default function App() {
       >
         <meta name="description" content="A Deck dash 2 application" />
       </Helmet>
+      <Main>
+      <H1>Maehren Digital deck dashboard</H1>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
+      </Main>
       <GlobalStyle />
     </AppWrapper>
   );

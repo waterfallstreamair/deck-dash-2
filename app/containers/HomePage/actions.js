@@ -1,40 +1,38 @@
 import * as constants from './constants';
 
-export const getPostsRequest = (options) => {
-  return { 
-    type: constants.TYPE_POSTS_REQUEST 
-  }
-};
+export const getPostsRequest = () => ({
+  type: constants.TYPE_POSTS_REQUEST,
+});
 
-export const getPosts = (options) => {
+export const getPosts = options => {
   const { posts } = options;
   return {
     type: constants.TYPE_POSTS_SUCCESS,
-    posts: posts.slice(0, 10)
+    posts: posts.slice(0, 10),
   };
 };
 
-export const getCommentsRequest = (options) => {
+export const getCommentsRequest = options => {
   const { post } = options;
-  return { 
-    type: constants.TYPE_COMMENTS_REQUEST, 
-    post 
-  }
+  return {
+    type: constants.TYPE_COMMENTS_REQUEST,
+    post,
+  };
 };
 
-export const getComments = (options) => {
+export const getComments = options => {
   const { post, comments } = options;
   return {
     type: constants.TYPE_COMMENTS_SUCCESS,
     post,
-    comments
+    comments,
   };
 };
 
-export const removeComments = (options) => {
+export const removeComments = options => {
   const { post } = options;
   return {
     type: constants.TYPE_COMMENTS_REMOVE,
-    post
+    post,
   };
 };

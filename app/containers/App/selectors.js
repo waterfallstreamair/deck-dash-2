@@ -13,7 +13,4 @@ const makeSelectLocation = () =>
     routerState.get('location').toJS(),
   );
 
-export {
-  selectGlobal,
-  makeSelectLocation,
-};
+export { selectGlobal, makeSelectLocation };

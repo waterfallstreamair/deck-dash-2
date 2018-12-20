@@ -10,7 +10,7 @@ const Item = styled.div`
   padding: 2em;
   margin-left: 10%;
   &:hover {
-    background-color: #eeeeee
+    background-color: #eeeeee;
   }
 `;
 

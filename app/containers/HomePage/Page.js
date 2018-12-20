@@ -7,8 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 
 import Column from '../../components/Column';
 import H3 from '../../components/H3';
@@ -22,98 +22,109 @@ import Head from '../../components/Head';
 import List from '../../components/List';
 
 export class HomePage extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      search: null
+      search: null,
     };
   }
-  
+
   componentDidMount() {
     this.props.getPostsRequest();
   }
-  
-  getComments = (options) => {
+
+  getComments = options => {
     const { post } = options;
     this.props.getCommentsRequest({ post });
   };
-  
-  removeComments = (options) => {
+
+  removeComments = options => {
     const { post } = options;
     this.props.removeComments({ post });
   };
-  
-  handleSearch = (e) => {
+
+  handleSearch = e => {
     this.setState({
-      search: e.target.value
-    })
+      search: e.target.value,
+    });
   };
-  
+
+  renderPosts = options => {
+    const { posts } = options;
+    return posts.map(e => (
+      <Item key={`post-${e.id}`} onClick={() => this.getComments({ post: e })}>
+        <Title>{`${e.title}`}</Title>
+        <Text>{`${e.body}`}</Text>
+      </Item>
+    ));
+  };
+
+  renderComments = options => {
+    const { comments } = options;
+    return comments.map(e => (
+      <Item key={`comment-${e.id}`}>
+        <Title>{`${e.name}`}</Title>
+        <Text>{`${e.body}`}</Text>
+      </Item>
+    ));
+  };
+
   render() {
     const { posts, comments } = this.props;
     const search = this.state.search ? this.state.search.toLowerCase() : null;
-    const filtered = search ? 
-      posts.filter(e => e.title.toLowerCase().includes(search)) 
-      : 
-      null;
+    const filtered = search
+      ? posts.filter(e => e.title.toLowerCase().includes(search))
+      : null;
     return (
       <article>
         <Helmet>
           <title>Home</title>
-          <meta
-            name="description"
-            content="A Deck dash application"
-          />
+          <meta name="description" content="A Deck dash application" />
         </Helmet>
         <div>
-          
-       <Content>
-          <Column key={'posts'} >
-            <Head>
-              <H3>Posts</H3>
-              <Search placeholder="Search..." onKeyUp={e => this.handleSearch(e) } />
-            </Head>
-            <List>
-              {posts && posts.length ? (filtered || posts).map(e =>
-                <Item key={`post-${e.id}`} onClick={event => this.getComments({ post: e }) } >
-                  <Title>{`${e.title}`}</Title>
-                  <Text>{`${e.body}`}</Text>
-                </Item>
-              ) : ''}
-            </List>
-          </Column>
-          {posts && posts.length && posts.map(e =>
-            comments.get(e.id) && 
-              <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
-                <Head>
-                  <H3>{`Post ${e.id} Comments`}</H3>
-                  <Remove onClick={event => this.removeComments({ post: e }) }>X</Remove>
-                </Head>
-                <List>
-                {comments.get(e.id).length ? comments.get(e.id).map(c =>
-                  <Item key={`comment-${c.id}`}>
-                    <Title>{`${c.name}`}</Title>
-                    <Text>{`${c.body}`}</Text>
-                  </Item>
-                ) : ''}
-                </List>
-              </Column>
-          )}
-        </Content>
-       
+          <Content>
+            <Column key="posts">
+              <Head>
+                <H3>Posts</H3>
+                <Search
+                  placeholder="Search..."
+                  onKeyUp={e => this.handleSearch(e)}
+                />
+              </Head>
+              <List>{this.renderPosts({ posts: filtered || posts })}</List>
+            </Column>
+            {posts &&
+              posts.map(
+                e =>
+                  comments.get(e.id) && (
+                    <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
+                      <Head>
+                        <H3>{`Post ${e.id} Comments`}</H3>
+                        <Remove
+                          onClick={() => this.removeComments({ post: e })}
+                        >
+                          X
+                        </Remove>
+                      </Head>
+                      <List>
+                        {this.renderComments({ comments: comments.get(e.id) })}
+                      </List>
+                    </Column>
+                  ),
+              )}
+          </Content>
         </div>
       </article>
     );
   }
 }
-/*
+
 HomePage.propTypes = {
-  posts: PropTypes.array.isRequired,
-  comments: PropTypes.object.isRequired,
+  posts: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
+  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
   getPostsRequest: PropTypes.func.isRequired,
   getCommentsRequest: PropTypes.func.isRequired,
-  removeComments: PropTypes.func.isRequired
+  removeComments: PropTypes.func.isRequired,
 };
-*/
-export default HomePage
+
+export default HomePage;

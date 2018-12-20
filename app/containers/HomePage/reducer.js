@@ -8,7 +8,7 @@ import * as constants from './constants';
 
 export const initialState = fromJS({
   posts: false,
-  comments: {}
+  comments: {},
 });
 
 function homeReducer(state = initialState, action) {

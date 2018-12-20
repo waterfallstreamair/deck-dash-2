@@ -1,5 +1,6 @@
 export const CONST_URL_POSTS = 'https://jsonplaceholder.typicode.com/posts';
-export const CONST_URL_COMMENTS = 'https://jsonplaceholder.typicode.com/posts/{postId}/comments';
+export const CONST_URL_COMMENTS =
+  'https://jsonplaceholder.typicode.com/posts/{postId}/comments';
 
 export const TYPE_POSTS_REQUEST = 'TYPE_POSTS_REQUEST';
 export const TYPE_POSTS_SUCCESS = 'TYPE_POSTS_SUCCESS';

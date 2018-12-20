@@ -28,18 +28,15 @@ const AppWrapper = styled.div`
 export default function App() {
   return (
     <AppWrapper>
-      <Helmet
-        titleTemplate="%s - Deck dash 2"
-        defaultTitle="Deck dash 2"
-      >
+      <Helmet titleTemplate="%s - Deck dash 2" defaultTitle="Deck dash 2">
         <meta name="description" content="A Deck dash 2 application" />
       </Helmet>
       <Main>
-      <H1>Mähren Digital GmbH Deck Dashboard 2</H1>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
+        <H1>Mähren Digital GmbH Deck Dashboard 2</H1>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
       </Main>
       <GlobalStyle />
     </AppWrapper>

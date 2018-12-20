@@ -51,12 +51,18 @@ export class HomePage extends React.Component {
 
   renderPosts = options => {
     const { posts } = options;
-    return posts.map(e => (
-      <Item key={`post-${e.id}`} onClick={() => this.getComments({ post: e })}>
-        <Title>{`${e.title}`}</Title>
-        <Text>{`${e.body}`}</Text>
-      </Item>
-    ));
+    if (posts) {
+      return posts.map(e => (
+        <Item
+          key={`post-${e.id}`}
+          onClick={() => this.getComments({ post: e })}
+        >
+          <Title>{`${e.title}`}</Title>
+          <Text>{`${e.body}`}</Text>
+        </Item>
+      ));
+    }
+    return '';
   };
 
   renderComments = options => {

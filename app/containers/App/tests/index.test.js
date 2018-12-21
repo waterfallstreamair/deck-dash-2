@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Route } from 'react-router-dom';
 import App from '../index';
-import HomePage from '../../HomePage';
+import Main from '../../../components/Main';
 import H1 from '../../../components/H1';
 
 describe('<App />', () => {
@@ -16,8 +16,8 @@ describe('<App />', () => {
     expect(renderedComponent.find(Route)).not.toHaveLength(0);
   });
 
-  it('should render BoardPage', () => {
+  it('should render Main', () => {
     const component = shallow(<App />);
-    expect(component.find(HomePage)).toHaveLength(1);
+    expect(component.find(Main)).toHaveLength(1);
   });
 });

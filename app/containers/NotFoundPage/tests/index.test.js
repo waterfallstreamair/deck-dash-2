@@ -6,21 +6,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
-import H1 from 'components/H1';
+import H3 from 'components/H3';
 import NotFound from '../index';
 
 describe('<NotFound />', () => {
   it('should render the Page Not Found text', () => {
-    const renderedComponent = shallow(<NotFound />);
-    expect(
-      renderedComponent.contains(
-        <H1>
-          <FormattedMessage
-            id="boilerplate.containers.NotFoundPage.header"
-            defaultMessage="Page not found."
-          />
-        </H1>,
-      ),
-    ).toEqual(true);
+    const component = shallow(<NotFound />);
+    expect(component.find(H3)).toHaveLength(1);
   });
 });

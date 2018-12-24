@@ -13,13 +13,11 @@ import { Helmet } from 'react-helmet';
 import Column from '../../components/Column';
 import H3 from '../../components/H3';
 import Content from '../../components/Content';
-import Item from '../../components/Item';
-import Title from '../../components/Title';
-import Text from '../../components/Text';
 import Remove from '../../components/Remove';
 import Search from '../../components/Search';
 import Head from '../../components/Head';
-import List from '../../components/List';
+import Comments from './Comments';
+import Posts from './Posts';
 
 export class HomePage extends React.Component {
   constructor(props) {
@@ -49,7 +47,7 @@ export class HomePage extends React.Component {
     });
   };
 
-  renderPosts = options => {
+  /*renderPosts = options => {
     const { posts } = options;
     if (posts) {
       return posts.map(e => (
@@ -63,17 +61,7 @@ export class HomePage extends React.Component {
       ));
     }
     return '';
-  };
-
-  renderComments = options => {
-    const { comments } = options;
-    return comments.map(e => (
-      <Item key={`comment-${e.id}`}>
-        <Title>{`${e.name}`}</Title>
-        <Text>{`${e.body}`}</Text>
-      </Item>
-    ));
-  };
+  };*/
 
   render() {
     const { posts, comments } = this.props;
@@ -97,7 +85,10 @@ export class HomePage extends React.Component {
                   onKeyUp={e => this.handleSearch(e)}
                 />
               </Head>
-              <List>{this.renderPosts({ posts: filtered || posts })}</List>
+              <Posts 
+                posts={filtered || posts} 
+                getComments={this.getComments}
+              />
             </Column>
             {posts &&
               posts.map(
@@ -112,9 +103,7 @@ export class HomePage extends React.Component {
                           X
                         </Remove>
                       </Head>
-                      <List>
-                        {this.renderComments({ comments: comments.get(e.id) })}
-                      </List>
+                      <Comments comments={comments.get(e.id)} />
                     </Column>
                   ),
               )}

@@ -69,10 +69,7 @@ export class HomePage extends React.Component {
                   onKeyUp={e => this.handleSearch(e)}
                 />
               </Head>
-              <Posts 
-                posts={filtered || posts} 
-                getComments={this.getComments}
-              />
+              <Posts posts={filtered || posts} getComments={this.getComments} />
             </Column>
             {posts &&
               posts.map(

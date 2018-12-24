@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
 
 import H3 from 'components/H3';
 import NotFound from '../index';

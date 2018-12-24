@@ -7,15 +7,21 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import H1 from 'components/H1';
+import H3 from 'components/H3';
+import Content from 'components/Content';
 import messages from './messages';
+import Wrapper from './Wrapper';
 
 export default function NotFound() {
   return (
     <article>
-      <H1>
-        <FormattedMessage {...messages.header} />
-      </H1>
+      <Content>
+        <Wrapper>
+          <H3>
+            <FormattedMessage {...messages.header} />
+          </H3>
+        </Wrapper>
+      </Content>
     </article>
   );
 }

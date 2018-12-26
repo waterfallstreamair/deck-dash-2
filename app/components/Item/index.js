@@ -3,12 +3,10 @@ import styled from 'styled-components';
 const Item = styled.div`
   border: solid 1px #eeeeee;
   border-radius: 0.2em;
-  width: 10em;
   height: 10em;
+  margin-right: 1em;
   margin-top: 1em;
-  margin-bottom: 1em;
-  padding: 2em;
-  margin-left: 10%;
+  padding: 1.5em;
   &:hover {
     background-color: #eeeeee;
   }

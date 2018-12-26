@@ -59,16 +59,14 @@ export class HomePage extends React.Component {
           <title>Home</title>
           <meta name="description" content="A Deck dash application" />
         </Helmet>
-        <div>
+       
           <Content>
             <Column key="posts">
-              <Head>
-                <H3>Posts</H3>
-                <Search
-                  placeholder="Search..."
-                  onKeyUp={e => this.handleSearch(e)}
-                />
-              </Head>
+              <H3>Posts</H3>
+              <Search
+                placeholder="Search..."
+                onKeyUp={e => this.handleSearch(e)}
+              />
               <Posts posts={filtered || posts} getComments={this.getComments} />
             </Column>
             {posts &&
@@ -77,19 +75,19 @@ export class HomePage extends React.Component {
                   comments.get(e.id) && (
                     <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
                       <Head>
-                        <H3>{`Post ${e.id} Comments`}</H3>
                         <Remove
                           onClick={() => this.removeComments({ post: e })}
                         >
                           X
                         </Remove>
-                      </Head>
+                      </Head>  
+                      <H3>{`Post ${e.id} Comments`}</H3>
                       <Comments comments={comments.get(e.id)} />
                     </Column>
                   ),
               )}
           </Content>
-        </div>
+   
       </article>
     );
   }

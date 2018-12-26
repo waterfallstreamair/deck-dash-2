@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 const List = styled.div`
-  width: 100%;
-  vertical-align: top;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: column nowrap;
+  align-items: stretch;
   overflow-y: scroll;
-  height: 80%;
+  margin-top: 1em;
 `;
 
 export default List;

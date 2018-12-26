@@ -18,7 +18,7 @@ const Comments = ({ comments }) => (
 );
 
 Comments.propTypes = {
-  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
+  comments: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
 };
 
 export default Comments;

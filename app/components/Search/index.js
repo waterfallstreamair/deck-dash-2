@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 const Search = styled.input`
-  font-size: 1em;
   color: #cccccc;
   margin-top: 1em;
-  width: 85%;
   margin-left: 0em;
+  height: 1em;
+  min-height: 1em;
 `;
 
 export default Search;

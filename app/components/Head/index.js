@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 const Head = styled.div`
-  width: 18em;
-  display: inline-block;
-  vertical-align: top;
-  height: 15%;
-  margin-left: 10%;
+  display: flex;
+  justify-content: flex-end;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  height: 2em;
+  min-height: 2em;
+  margin: 0em;
+  padding: 0em;
 `;
 
 export default Head;

@@ -3,9 +3,7 @@ import styled from 'styled-components';
 const H3 = styled.div`
   font-size: 1.4em;
   color: #cccccc;
-  min-width: 80%;
   text-align: left;
-  display: inline-block;
   font-weight: bold;
 `;
 

@@ -32,12 +32,12 @@ export class HomePage extends React.Component {
     this.props.getPostsRequest();
   }
 
-  getComments = options => {
+  getComments = async (options) => {
     const { post } = options;
     this.props.getCommentsRequest({ post });
   };
 
-  removeComments = options => {
+  removeComments = async (options) => {
     const { post } = options;
     this.props.removeComments({ post });
   };

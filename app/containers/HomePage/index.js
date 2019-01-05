@@ -4,19 +4,16 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-// import React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-// import messages from './messages';
 import { makeSelectPosts, makeSelectComments } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import HomePage from './Page';
-
 import * as postActions from './actions';
 
 const mapStateToProps = createStructuredSelector({

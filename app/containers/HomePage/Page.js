@@ -24,6 +24,7 @@ export class HomePage extends React.Component {
     super(props);
     this.state = {
       search: null,
+      filtered: null
     };
   }
 
@@ -41,53 +42,53 @@ export class HomePage extends React.Component {
     this.props.removeComments({ post });
   };
 
-  handleSearch = e => {
+  handleSearch = async (e) => {
+    const { value } = e.target;
+    const search = value ? value.toLowerCase() : null;
+    const filtered = search
+      ? this.props.posts.filter(e => e.title.toLowerCase().includes(search))
+      : null;
     this.setState({
-      search: e.target.value,
+      search, filtered
     });
   };
 
   render() {
     const { posts, comments } = this.props;
-    const search = this.state.search ? this.state.search.toLowerCase() : null;
-    const filtered = search
-      ? posts.filter(e => e.title.toLowerCase().includes(search))
-      : null;
+    const { filtered } = this.state;
     return (
       <article>
         <Helmet>
           <title>Home</title>
           <meta name="description" content="A Deck dash application" />
         </Helmet>
-       
-          <Content>
-            <Column key="posts">
-              <H3>Posts</H3>
-              <Search
-                placeholder="Search..."
-                onKeyUp={e => this.handleSearch(e)}
-              />
-              <Posts posts={filtered || posts} getComments={this.getComments} />
-            </Column>
-            {posts &&
-              posts.map(
-                e =>
-                  comments.get(e.id) && (
-                    <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
-                      <Head>
-                        <Remove
-                          onClick={() => this.removeComments({ post: e })}
-                        >
-                          X
-                        </Remove>
-                      </Head>  
-                      <H3>{`Post ${e.id} Comments`}</H3>
-                      <Comments comments={comments.get(e.id)} />
-                    </Column>
-                  ),
-              )}
-          </Content>
-   
+        <Content>
+          <Column key="posts">
+            <H3>Posts</H3>
+            <Search
+              placeholder="Search..."
+              onKeyUp={e => this.handleSearch(e)}
+            />
+            <Posts posts={filtered || posts} getComments={this.getComments} />
+          </Column>
+          {posts &&
+            posts.map(
+              e =>
+                comments.get(e.id) && (
+                  <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
+                    <Head>
+                      <Remove
+                        onClick={() => this.removeComments({ post: e })}
+                      >
+                        X
+                      </Remove>
+                    </Head>  
+                    <H3>{`Post ${e.id} Comments`}</H3>
+                    <Comments comments={comments.get(e.id)} />
+                  </Column>
+                ),
+            )}
+        </Content>
       </article>
     );
   }

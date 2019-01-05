@@ -4,7 +4,6 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,8 +18,6 @@ import * as postActions from './actions';
 const mapStateToProps = createStructuredSelector({
   posts: makeSelectPosts(),
   comments: makeSelectComments(),
-  // loading: makeSelectLoading(),
-  // error: makeSelectError()
 });
 
 const mapDispatchToProps = dispatch => ({

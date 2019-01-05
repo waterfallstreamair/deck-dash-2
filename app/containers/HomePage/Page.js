@@ -7,9 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
-
 import Column from '../../components/Column';
 import H3 from '../../components/H3';
 import Content from '../../components/Content';
@@ -23,8 +20,7 @@ export class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: null,
-      filtered: null
+      filtered: null,
     };
   }
 
@@ -32,24 +28,24 @@ export class HomePage extends React.Component {
     this.props.getPostsRequest();
   }
 
-  getComments = async (options) => {
+  getComments = async options => {
     const { post } = options;
     this.props.getCommentsRequest({ post });
   };
 
-  removeComments = async (options) => {
+  removeComments = async options => {
     const { post } = options;
     this.props.removeComments({ post });
   };
 
-  handleSearch = async (e) => {
-    const { value } = e.target;
+  handleSearch = async event => {
+    const { value } = event.target;
     const search = value ? value.toLowerCase() : null;
     const filtered = search
       ? this.props.posts.filter(e => e.title.toLowerCase().includes(search))
       : null;
     this.setState({
-      search, filtered
+      filtered,
     });
   };
 
@@ -77,12 +73,10 @@ export class HomePage extends React.Component {
                 comments.get(e.id) && (
                   <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
                     <Head>
-                      <Remove
-                        onClick={() => this.removeComments({ post: e })}
-                      >
+                      <Remove onClick={() => this.removeComments({ post: e })}>
                         X
                       </Remove>
-                    </Head>  
+                    </Head>
                     <H3>{`Post ${e.id} Comments`}</H3>
                     <Comments comments={comments.get(e.id)} />
                   </Column>

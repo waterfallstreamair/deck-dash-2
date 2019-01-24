@@ -52,6 +52,7 @@ export class HomePage extends React.Component {
   render() {
     const { posts, comments } = this.props;
     const { filtered } = this.state;
+    const items = posts || filtered;
     return (
       <article>
         <Helmet>
@@ -65,10 +66,10 @@ export class HomePage extends React.Component {
               placeholder="Search..."
               onKeyUp={e => this.handleSearch(e)}
             />
-            <Posts posts={filtered || posts} getComments={this.getComments} />
+            <Posts posts={items} getComments={this.getComments} />
           </Column>
-          {posts &&
-            posts.map(
+          {items && items.length &&
+            items.map(
               e =>
                 comments.get(e.id) && (
                   <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>

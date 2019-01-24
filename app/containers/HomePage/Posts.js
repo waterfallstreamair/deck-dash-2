@@ -21,7 +21,7 @@ const Posts = ({ posts, getComments }) =>
   );
 
 Posts.propTypes = {
-  posts: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
+  posts: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   getComments: PropTypes.func.isRequired,
 };
 

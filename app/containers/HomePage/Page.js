@@ -34,25 +34,18 @@ export class HomePage extends React.Component {
   };
 
   removeComments = async options => {
-    const { post } = options;
-    this.props.removeComments({ post });
+    const { id } = options;
+    this.props.removeComments({ id });
   };
 
   handleSearch = async event => {
     const { value } = event.target;
-    const search = value ? value.toLowerCase() : null;
-    const filtered = search
-      ? this.props.posts.filter(e => e.title.toLowerCase().includes(search))
-      : null;
-    this.setState({
-      filtered,
-    });
+    this.props.setFilterRequest({ search: value });
   };
 
   render() {
-    const { posts, comments } = this.props;
-    const { filtered } = this.state;
-    const items = posts || filtered;
+    const { posts, comments, filtered } = this.props;
+    const items = filtered || posts;
     return (
       <article>
         <Helmet>
@@ -68,18 +61,17 @@ export class HomePage extends React.Component {
             />
             <Posts posts={items} getComments={this.getComments} />
           </Column>
-          {items && items.length &&
-            items.map(
+          {[...comments.keys()].map(
               e =>
-                comments.get(e.id) && (
-                  <Column key={`comments-${e.id}`} id={`comments-${e.id}`}>
+                comments.get(e) && (
+                  <Column key={`comments-${e}`} id={`comments-${e}`}>
                     <Head>
-                      <Remove onClick={() => this.removeComments({ post: e })}>
+                      <Remove onClick={() => this.removeComments({ id: e })}>
                         X
                       </Remove>
                     </Head>
-                    <H3>{`Post ${e.id} Comments`}</H3>
-                    <Comments comments={comments.get(e.id)} />
+                    <H3>{`Post ${e} Comments`}</H3>
+                    <Comments comments={comments.get(e)} />
                   </Column>
                 ),
             )}
@@ -91,8 +83,10 @@ export class HomePage extends React.Component {
 
 HomePage.propTypes = {
   posts: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
+  filtered: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
   getPostsRequest: PropTypes.func.isRequired,
+  setFilterRequest: PropTypes.func.isRequired,
   getCommentsRequest: PropTypes.func.isRequired,
   removeComments: PropTypes.func.isRequired,
 };

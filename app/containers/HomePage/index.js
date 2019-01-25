@@ -9,8 +9,8 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import { 
-  makeSelectPosts, 
+import {
+  makeSelectPosts,
   makeSelectFiltered,
   makeSelectComments,
 } from './selectors';
@@ -27,7 +27,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   getPostsRequest: () => dispatch(postActions.getPostsRequest()),
-  setFilterRequest: options => 
+  setFilterRequest: options =>
     dispatch(postActions.setPostsFilterRequest(options)),
   getCommentsRequest: options =>
     dispatch(postActions.getCommentsRequest(options)),

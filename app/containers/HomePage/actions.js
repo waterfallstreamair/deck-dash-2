@@ -12,19 +12,15 @@ export const getPosts = options => {
   };
 };
 
-export const setPostsFilterRequest = ({ search }) => {
-  return {
-    type: constants.TYPE_POSTS_FILTER_REQUEST,
-    search
-  };
-};
+export const setPostsFilterRequest = ({ search }) => ({
+  type: constants.TYPE_POSTS_FILTER_REQUEST,
+  search,
+});
 
-export const setPostsFilter = ({ filtered }) => {
-  return {
-    type: constants.TYPE_POSTS_FILTER_SUCCESS,
-    filtered
-  };
-};
+export const setPostsFilter = ({ filtered }) => ({
+  type: constants.TYPE_POSTS_FILTER_SUCCESS,
+  filtered,
+});
 
 export const getCommentsRequest = options => {
   const { post } = options;

@@ -19,9 +19,7 @@ import Posts from './Posts';
 export class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      filtered: null,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -62,19 +60,19 @@ export class HomePage extends React.Component {
             <Posts posts={items} getComments={this.getComments} />
           </Column>
           {[...comments.keys()].map(
-              e =>
-                comments.get(e) && (
-                  <Column key={`comments-${e}`} id={`comments-${e}`}>
-                    <Head>
-                      <Remove onClick={() => this.removeComments({ id: e })}>
-                        X
-                      </Remove>
-                    </Head>
-                    <H3>{`Post ${e} Comments`}</H3>
-                    <Comments comments={comments.get(e)} />
-                  </Column>
-                ),
-            )}
+            e =>
+              comments.get(e) && (
+                <Column key={`comments-${e}`} id={`comments-${e}`}>
+                  <Head>
+                    <Remove onClick={() => this.removeComments({ id: e })}>
+                      X
+                    </Remove>
+                  </Head>
+                  <H3>{`Post ${e} Comments`}</H3>
+                  <Comments comments={comments.get(e)} />
+                </Column>
+              ),
+          )}
         </Content>
       </article>
     );

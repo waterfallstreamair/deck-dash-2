@@ -17,14 +17,13 @@ export function* getPosts() {
 export function* setPostsFilter(action) {
   const { search } = action;
   try {
-    const posts = yield select(makeSelectPosts())
+    const posts = yield select(makeSelectPosts());
     const text = search ? search.toLowerCase() : null;
     const filtered = text
       ? posts.filter(e => e.title.toLowerCase().includes(text))
       : null;
     yield put(actions.setPostsFilter({ filtered }));
   } catch (e) {
-    console.log({ e })
     // yield put(actions.showInfo({ e }));
   }
 }
